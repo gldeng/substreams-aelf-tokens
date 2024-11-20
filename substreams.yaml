@@ -35,13 +35,30 @@ modules:
       - source: aelf.Block
     output:
       type: proto:sf.substreams.aelf.token.v1.StateUpdates
+
+  - name: filtered_state_updates
+    kind: map
+    inputs:
+      - params: string
+      - map: all_state_updates
+    output:
+      type: proto:sf.substreams.aelf.token.v1.StateUpdates
+    doc: |
+      `filtered_state_updates` reads from `all_state_updates` and applies a filter on the state paths.
+      Supported operators are: logical or `||`, logical and `&&` and parenthesis: `()`
+      Use pattern `st_<x>` as the prefix where x is the index of the state path.
+      Example: `st_0:JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE && st_1:Balances`
+
   - name: all_balance_changes
     kind: map
     doc: Extracts Token balance changes
     initialBlock: 1
     inputs:
-      - map: all_state_updates
+      - map: filtered_state_updates
     output:
       type: proto:sf.substreams.aelf.token.v1.BalanceChanges
+
+params:
+  filtered_state_updates: "st_0:JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE && st_1:Balances"
 
 network: aelf

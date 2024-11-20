@@ -4,4 +4,8 @@
 
 substreams run -e localhost:10016 --plaintext \
 substreams-aelf-tokens-v0.1.0.spkg \
-  map_state_updates -s 58 -t +10
+  all_balance_changes -s 58 -t +10
+
+substreams run -e localhost:10016 --plaintext \
+substreams-aelf-tokens-v0.1.0.spkg \
+  filtered_state_updates -s 58 -t +10
