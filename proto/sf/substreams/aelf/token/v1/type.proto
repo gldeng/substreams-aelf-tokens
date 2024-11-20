@@ -34,9 +34,10 @@ message Transfers {
 
 message Transfer {
   string contract = 1;
-  string symbole = 2;
+  string symbol = 2;
   string from = 3;
   string to = 4;
   string amount = 5;
+  string memo = 6;
 }
 

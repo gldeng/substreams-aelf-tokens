@@ -81,6 +81,15 @@ modules:
     output:
       type: proto:sf.substreams.aelf.token.v1.BalanceChanges
 
+  - name: all_transfers
+    kind: map
+    doc: Extracts token transfers
+    initialBlock: 1
+    inputs:
+      - map: filtered_events
+    output:
+      type: proto:sf.substreams.aelf.token.v1.Transfers
+
 params:
   filtered_events: "evt_addr:JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE && evt_name:Transferred"
   filtered_state_updates: "st_0:JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE && st_1:Balances"
