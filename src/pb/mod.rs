@@ -1,9 +1,4 @@
 // @generated
-// @@protoc_insertion_point(attribute:aelf)
-pub mod aelf {
-    include!("aelf.rs");
-    // @@protoc_insertion_point(aelf)
-}
 pub mod sf {
     // @@protoc_insertion_point(attribute:sf.substreams)
     pub mod substreams {
@@ -16,13 +11,6 @@ pub mod sf {
                     include!("sf.substreams.aelf.token.v1.rs");
                     // @@protoc_insertion_point(sf.substreams.aelf.token.v1)
                 }
-            }
-        }
-        pub mod index {
-            // @@protoc_insertion_point(attribute:sf.substreams.index.v1)
-            pub mod v1 {
-                include!("sf.substreams.index.v1.rs");
-                // @@protoc_insertion_point(sf.substreams.index.v1)
             }
         }
         // @@protoc_insertion_point(attribute:sf.substreams.v1)

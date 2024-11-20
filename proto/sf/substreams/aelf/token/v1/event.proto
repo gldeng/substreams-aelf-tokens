@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package sf.substreams.aelf.token.v1;
+
+import 'aelf/core.proto';
+import 'sf/substreams/v1/clock.proto';
+
+message Events {
+  sf.substreams.v1.Clock clock = 1;
+  repeated Event events = 2;
+  reserved 3; // for cross-compatibility with Call message
+}
+
+message Event {
+  .aelf.LogEvent log = 1;
+  string tx_id = 2;
+}

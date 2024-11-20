@@ -20,7 +20,7 @@ pub struct TokenInfo {
     pub decimals: i32,
     /// The address that has permission to issue the token.
     #[prost(message, optional, tag="6")]
-    pub issuer: ::core::option::Option<super::aelf::Address>,
+    pub issuer: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// A flag indicating if this token is burnable.
     #[prost(bool, tag="7")]
     pub is_burnable: bool,
@@ -35,7 +35,7 @@ pub struct TokenInfo {
     pub external_info: ::core::option::Option<ExternalInfo>,
     /// The address that owns the token.
     #[prost(message, optional, tag="11")]
-    pub owner: ::core::option::Option<super::aelf::Address>,
+    pub owner: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -60,13 +60,13 @@ pub struct CreateInput {
     pub decimals: i32,
     /// The address that has permission to issue the token.
     #[prost(message, optional, tag="5")]
-    pub issuer: ::core::option::Option<super::aelf::Address>,
+    pub issuer: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// A flag indicating if this token is burnable.
     #[prost(bool, tag="6")]
     pub is_burnable: bool,
     /// A whitelist address list used to lock tokens.
     #[prost(message, repeated, tag="7")]
-    pub lock_white_list: ::prost::alloc::vec::Vec<super::aelf::Address>,
+    pub lock_white_list: ::prost::alloc::vec::Vec<substreams_aelf_core::pb::aelf::Address>,
     /// The chain id of the token.
     #[prost(int32, tag="8")]
     pub issue_chain_id: i32,
@@ -75,7 +75,7 @@ pub struct CreateInput {
     pub external_info: ::core::option::Option<ExternalInfo>,
     /// The address that owns the token.
     #[prost(message, optional, tag="10")]
-    pub owner: ::core::option::Option<super::aelf::Address>,
+    pub owner: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -98,14 +98,14 @@ pub struct IssueInput {
     pub memo: ::prost::alloc::string::String,
     /// The target address to issue.
     #[prost(message, optional, tag="4")]
-    pub to: ::core::option::Option<super::aelf::Address>,
+    pub to: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TransferInput {
     /// The receiver of the token.
     #[prost(message, optional, tag="1")]
-    pub to: ::core::option::Option<super::aelf::Address>,
+    pub to: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The token symbol to transfer.
     #[prost(string, tag="2")]
     pub symbol: ::prost::alloc::string::String,
@@ -121,10 +121,10 @@ pub struct TransferInput {
 pub struct LockInput {
     /// The one want to lock his token.
     #[prost(message, optional, tag="1")]
-    pub address: ::core::option::Option<super::aelf::Address>,
+    pub address: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// Id of the lock.
     #[prost(message, optional, tag="2")]
-    pub lock_id: ::core::option::Option<super::aelf::Hash>,
+    pub lock_id: ::core::option::Option<substreams_aelf_core::pb::aelf::Hash>,
     /// The symbol of the token to lock.
     #[prost(string, tag="3")]
     pub symbol: ::prost::alloc::string::String,
@@ -140,10 +140,10 @@ pub struct LockInput {
 pub struct UnlockInput {
     /// The one want to un-lock his token.
     #[prost(message, optional, tag="1")]
-    pub address: ::core::option::Option<super::aelf::Address>,
+    pub address: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// Id of the lock.
     #[prost(message, optional, tag="2")]
-    pub lock_id: ::core::option::Option<super::aelf::Hash>,
+    pub lock_id: ::core::option::Option<substreams_aelf_core::pb::aelf::Hash>,
     /// The symbol of the token to un-lock.
     #[prost(string, tag="3")]
     pub symbol: ::prost::alloc::string::String,
@@ -159,10 +159,10 @@ pub struct UnlockInput {
 pub struct TransferFromInput {
     /// The source address of the token.
     #[prost(message, optional, tag="1")]
-    pub from: ::core::option::Option<super::aelf::Address>,
+    pub from: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The destination address of the token.
     #[prost(message, optional, tag="2")]
-    pub to: ::core::option::Option<super::aelf::Address>,
+    pub to: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The symbol of the token to transfer.
     #[prost(string, tag="3")]
     pub symbol: ::prost::alloc::string::String,
@@ -178,7 +178,7 @@ pub struct TransferFromInput {
 pub struct ApproveInput {
     /// The address that allowance will be increased.
     #[prost(message, optional, tag="1")]
-    pub spender: ::core::option::Option<super::aelf::Address>,
+    pub spender: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The symbol of token to approve.
     #[prost(string, tag="2")]
     pub symbol: ::prost::alloc::string::String,
@@ -197,7 +197,7 @@ pub struct BatchApproveInput {
 pub struct UnApproveInput {
     /// The address that allowance will be decreased.
     #[prost(message, optional, tag="1")]
-    pub spender: ::core::option::Option<super::aelf::Address>,
+    pub spender: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The symbol of token to un-approve.
     #[prost(string, tag="2")]
     pub symbol: ::prost::alloc::string::String,
@@ -223,7 +223,7 @@ pub struct ChargeResourceTokenInput {
     pub cost_dic: ::std::collections::HashMap<::prost::alloc::string::String, i64>,
     /// The sender of the transaction.
     #[prost(message, optional, tag="2")]
-    pub caller: ::core::option::Option<super::aelf::Address>,
+    pub caller: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -244,7 +244,7 @@ pub struct TransactionFreeFeeAllowanceBill {
 pub struct CheckThresholdInput {
     /// The sender of the transaction.
     #[prost(message, optional, tag="1")]
-    pub sender: ::core::option::Option<super::aelf::Address>,
+    pub sender: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The threshold to set, Symbol->Threshold.
     #[prost(map="string, int64", tag="2")]
     pub symbol_to_threshold: ::std::collections::HashMap<::prost::alloc::string::String, i64>,
@@ -267,7 +267,7 @@ pub struct GetBalanceInput {
     pub symbol: ::prost::alloc::string::String,
     /// The target address of the query.
     #[prost(message, optional, tag="2")]
-    pub owner: ::core::option::Option<super::aelf::Address>,
+    pub owner: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -277,7 +277,7 @@ pub struct GetBalanceOutput {
     pub symbol: ::prost::alloc::string::String,
     /// The target address of the query.
     #[prost(message, optional, tag="2")]
-    pub owner: ::core::option::Option<super::aelf::Address>,
+    pub owner: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The balance of the owner.
     #[prost(int64, tag="3")]
     pub balance: i64,
@@ -290,10 +290,10 @@ pub struct GetAllowanceInput {
     pub symbol: ::prost::alloc::string::String,
     /// The address of the token owner.
     #[prost(message, optional, tag="2")]
-    pub owner: ::core::option::Option<super::aelf::Address>,
+    pub owner: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The address of the spender.
     #[prost(message, optional, tag="3")]
-    pub spender: ::core::option::Option<super::aelf::Address>,
+    pub spender: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -303,10 +303,10 @@ pub struct GetAllowanceOutput {
     pub symbol: ::prost::alloc::string::String,
     /// The address of the token owner.
     #[prost(message, optional, tag="2")]
-    pub owner: ::core::option::Option<super::aelf::Address>,
+    pub owner: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The address of the spender.
     #[prost(message, optional, tag="3")]
-    pub spender: ::core::option::Option<super::aelf::Address>,
+    pub spender: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The amount of allowance.
     #[prost(int64, tag="4")]
     pub allowance: i64,
@@ -316,7 +316,7 @@ pub struct GetAllowanceOutput {
 pub struct CrossChainTransferInput {
     /// The receiver of transfer.
     #[prost(message, optional, tag="1")]
-    pub to: ::core::option::Option<super::aelf::Address>,
+    pub to: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The symbol of token.
     #[prost(string, tag="2")]
     pub symbol: ::prost::alloc::string::String,
@@ -347,7 +347,7 @@ pub struct CrossChainReceiveTokenInput {
     pub transfer_transaction_bytes: ::prost::alloc::vec::Vec<u8>,
     /// The merkle path created from the transfer transaction.
     #[prost(message, optional, tag="4")]
-    pub merkle_path: ::core::option::Option<super::aelf::MerklePath>,
+    pub merkle_path: ::core::option::Option<substreams_aelf_core::pb::aelf::MerklePath>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -357,7 +357,7 @@ pub struct IsInWhiteListInput {
     pub symbol: ::prost::alloc::string::String,
     /// The address to check.
     #[prost(message, optional, tag="2")]
-    pub address: ::core::option::Option<super::aelf::Address>,
+    pub address: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -389,7 +389,7 @@ pub struct ChargeTransactionFeesInput {
     pub method_name: ::prost::alloc::string::String,
     /// The contract address of transaction.
     #[prost(message, optional, tag="2")]
-    pub contract_address: ::core::option::Option<super::aelf::Address>,
+    pub contract_address: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The amount of transaction size fee.
     #[prost(int64, tag="3")]
     pub transaction_size_fee: i64,
@@ -411,7 +411,7 @@ pub struct ChargeTransactionFeesOutput {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CallbackInfo {
     #[prost(message, optional, tag="1")]
-    pub contract_address: ::core::option::Option<super::aelf::Address>,
+    pub contract_address: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     #[prost(string, tag="2")]
     pub method_name: ::prost::alloc::string::String,
 }
@@ -427,26 +427,26 @@ pub struct ExtraTokenListModified {
 pub struct GetLockedAmountInput {
     /// The address of the lock.
     #[prost(message, optional, tag="1")]
-    pub address: ::core::option::Option<super::aelf::Address>,
+    pub address: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The token symbol.
     #[prost(string, tag="2")]
     pub symbol: ::prost::alloc::string::String,
     /// The id of the lock.
     #[prost(message, optional, tag="3")]
-    pub lock_id: ::core::option::Option<super::aelf::Hash>,
+    pub lock_id: ::core::option::Option<substreams_aelf_core::pb::aelf::Hash>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetLockedAmountOutput {
     /// The address of the lock.
     #[prost(message, optional, tag="1")]
-    pub address: ::core::option::Option<super::aelf::Address>,
+    pub address: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The token symbol.
     #[prost(string, tag="2")]
     pub symbol: ::prost::alloc::string::String,
     /// The id of the lock.
     #[prost(message, optional, tag="3")]
-    pub lock_id: ::core::option::Option<super::aelf::Hash>,
+    pub lock_id: ::core::option::Option<substreams_aelf_core::pb::aelf::Hash>,
     /// The locked amount.
     #[prost(int64, tag="4")]
     pub amount: i64,
@@ -479,7 +479,7 @@ pub struct CrossChainCreateTokenInput {
     pub transaction_bytes: ::prost::alloc::vec::Vec<u8>,
     /// The merkle path created from the transaction that created the transaction.
     #[prost(message, optional, tag="4")]
-    pub merkle_path: ::core::option::Option<super::aelf::MerklePath>,
+    pub merkle_path: ::core::option::Option<substreams_aelf_core::pb::aelf::MerklePath>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -489,10 +489,10 @@ pub struct InitializeFromParentChainInput {
     pub resource_amount: ::std::collections::HashMap<::prost::alloc::string::String, i32>,
     /// The token contract addresses.
     #[prost(map="int32, message", tag="2")]
-    pub registered_other_token_contract_addresses: ::std::collections::HashMap<i32, super::aelf::Address>,
+    pub registered_other_token_contract_addresses: ::std::collections::HashMap<i32, substreams_aelf_core::pb::aelf::Address>,
     /// The creator the side chain.
     #[prost(message, optional, tag="3")]
-    pub creator: ::core::option::Option<super::aelf::Address>,
+    pub creator: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -538,7 +538,7 @@ pub struct TotalTransactionFeesMap {
     pub value: ::std::collections::HashMap<::prost::alloc::string::String, i64>,
     /// The hash of the block processing the transaction.
     #[prost(message, optional, tag="2")]
-    pub block_hash: ::core::option::Option<super::aelf::Hash>,
+    pub block_hash: ::core::option::Option<substreams_aelf_core::pb::aelf::Hash>,
     /// The height of the block processing the transaction.
     #[prost(int64, tag="3")]
     pub block_height: i64,
@@ -551,7 +551,7 @@ pub struct TotalResourceTokensMaps {
     pub value: ::prost::alloc::vec::Vec<ContractTotalResourceTokens>,
     /// The hash of the block processing the transaction.
     #[prost(message, optional, tag="2")]
-    pub block_hash: ::core::option::Option<super::aelf::Hash>,
+    pub block_hash: ::core::option::Option<substreams_aelf_core::pb::aelf::Hash>,
     /// The height of the block processing the transaction.
     #[prost(int64, tag="3")]
     pub block_height: i64,
@@ -561,7 +561,7 @@ pub struct TotalResourceTokensMaps {
 pub struct ContractTotalResourceTokens {
     /// The contract address.
     #[prost(message, optional, tag="1")]
-    pub contract_address: ::core::option::Option<super::aelf::Address>,
+    pub contract_address: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// Resource tokens to charge.
     #[prost(message, optional, tag="2")]
     pub tokens_map: ::core::option::Option<TotalResourceTokensMap>,
@@ -603,7 +603,7 @@ pub struct TransactionFeeDelegatees {
 pub struct SetTransactionFeeDelegationsInput {
     /// the delegator address
     #[prost(message, optional, tag="1")]
-    pub delegator_address: ::core::option::Option<super::aelf::Address>,
+    pub delegator_address: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// delegation, symbols and its' amount
     #[prost(map="string, int64", tag="2")]
     pub delegations: ::std::collections::HashMap<::prost::alloc::string::String, i64>,
@@ -619,34 +619,34 @@ pub struct SetTransactionFeeDelegationsOutput {
 pub struct RemoveTransactionFeeDelegatorInput {
     /// the delegator address
     #[prost(message, optional, tag="1")]
-    pub delegator_address: ::core::option::Option<super::aelf::Address>,
+    pub delegator_address: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RemoveTransactionFeeDelegateeInput {
     /// the delegatee address
     #[prost(message, optional, tag="1")]
-    pub delegatee_address: ::core::option::Option<super::aelf::Address>,
+    pub delegatee_address: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetTransactionFeeDelegationsOfADelegateeInput {
     #[prost(message, optional, tag="1")]
-    pub delegatee_address: ::core::option::Option<super::aelf::Address>,
+    pub delegatee_address: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     #[prost(message, optional, tag="2")]
-    pub delegator_address: ::core::option::Option<super::aelf::Address>,
+    pub delegator_address: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetTransactionFeeDelegateesInput {
     #[prost(message, optional, tag="1")]
-    pub delegator_address: ::core::option::Option<super::aelf::Address>,
+    pub delegator_address: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetTransactionFeeDelegateesOutput {
     #[prost(message, repeated, tag="1")]
-    pub delegatee_addresses: ::prost::alloc::vec::Vec<super::aelf::Address>,
+    pub delegatee_addresses: ::prost::alloc::vec::Vec<substreams_aelf_core::pb::aelf::Address>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -663,10 +663,10 @@ pub struct SetSymbolAliasInput {
 pub struct Transferred {
     /// The source address of the transferred token.
     #[prost(message, optional, tag="1")]
-    pub from: ::core::option::Option<super::aelf::Address>,
+    pub from: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The destination address of the transferred token.
     #[prost(message, optional, tag="2")]
-    pub to: ::core::option::Option<super::aelf::Address>,
+    pub to: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The symbol of the transferred token.
     #[prost(string, tag="3")]
     pub symbol: ::prost::alloc::string::String,
@@ -682,10 +682,10 @@ pub struct Transferred {
 pub struct Approved {
     /// The address of the token owner.
     #[prost(message, optional, tag="1")]
-    pub owner: ::core::option::Option<super::aelf::Address>,
+    pub owner: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The address that allowance be increased.
     #[prost(message, optional, tag="2")]
-    pub spender: ::core::option::Option<super::aelf::Address>,
+    pub spender: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The symbol of approved token.
     #[prost(string, tag="3")]
     pub symbol: ::prost::alloc::string::String,
@@ -698,10 +698,10 @@ pub struct Approved {
 pub struct UnApproved {
     /// The address of the token owner.
     #[prost(message, optional, tag="1")]
-    pub owner: ::core::option::Option<super::aelf::Address>,
+    pub owner: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The address that allowance be decreased.
     #[prost(message, optional, tag="2")]
-    pub spender: ::core::option::Option<super::aelf::Address>,
+    pub spender: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The symbol of un-approved token.
     #[prost(string, tag="3")]
     pub symbol: ::prost::alloc::string::String,
@@ -714,7 +714,7 @@ pub struct UnApproved {
 pub struct Burned {
     /// The address who wants to burn token.
     #[prost(message, optional, tag="1")]
-    pub burner: ::core::option::Option<super::aelf::Address>,
+    pub burner: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The symbol of burned token.
     #[prost(string, tag="2")]
     pub symbol: ::prost::alloc::string::String,
@@ -747,10 +747,10 @@ pub struct RentalCharged {
     pub amount: i64,
     /// The payer of rental fee.
     #[prost(message, optional, tag="3")]
-    pub payer: ::core::option::Option<super::aelf::Address>,
+    pub payer: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The receiver of rental fee.
     #[prost(message, optional, tag="4")]
-    pub receiver: ::core::option::Option<super::aelf::Address>,
+    pub receiver: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -779,7 +779,7 @@ pub struct TokenCreated {
     pub decimals: i32,
     /// The address that has permission to issue the token.
     #[prost(message, optional, tag="5")]
-    pub issuer: ::core::option::Option<super::aelf::Address>,
+    pub issuer: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// A flag indicating if this token is burnable.
     #[prost(bool, tag="6")]
     pub is_burnable: bool,
@@ -791,7 +791,7 @@ pub struct TokenCreated {
     pub external_info: ::core::option::Option<ExternalInfo>,
     /// The address that owns the token.
     #[prost(message, optional, tag="9")]
-    pub owner: ::core::option::Option<super::aelf::Address>,
+    pub owner: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -807,17 +807,17 @@ pub struct Issued {
     pub memo: ::prost::alloc::string::String,
     /// The issued target address.
     #[prost(message, optional, tag="4")]
-    pub to: ::core::option::Option<super::aelf::Address>,
+    pub to: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CrossChainTransferred {
     /// The source address of the transferred token.
     #[prost(message, optional, tag="1")]
-    pub from: ::core::option::Option<super::aelf::Address>,
+    pub from: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The destination address of the transferred token.
     #[prost(message, optional, tag="2")]
-    pub to: ::core::option::Option<super::aelf::Address>,
+    pub to: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The symbol of the transferred token.
     #[prost(string, tag="3")]
     pub symbol: ::prost::alloc::string::String,
@@ -839,10 +839,10 @@ pub struct CrossChainTransferred {
 pub struct CrossChainReceived {
     /// The source address of the transferred token.
     #[prost(message, optional, tag="1")]
-    pub from: ::core::option::Option<super::aelf::Address>,
+    pub from: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The destination address of the transferred token.
     #[prost(message, optional, tag="2")]
-    pub to: ::core::option::Option<super::aelf::Address>,
+    pub to: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     /// The symbol of the received token.
     #[prost(string, tag="3")]
     pub symbol: ::prost::alloc::string::String,
@@ -863,27 +863,27 @@ pub struct CrossChainReceived {
     pub parent_chain_height: i64,
     /// The id of transfer transaction.
     #[prost(message, optional, tag="9")]
-    pub transfer_transaction_id: ::core::option::Option<super::aelf::Hash>,
+    pub transfer_transaction_id: ::core::option::Option<substreams_aelf_core::pb::aelf::Hash>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TransactionFeeDelegationAdded {
     #[prost(message, optional, tag="1")]
-    pub delegator: ::core::option::Option<super::aelf::Address>,
+    pub delegator: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     #[prost(message, optional, tag="2")]
-    pub delegatee: ::core::option::Option<super::aelf::Address>,
+    pub delegatee: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     #[prost(message, optional, tag="3")]
-    pub caller: ::core::option::Option<super::aelf::Address>,
+    pub caller: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TransactionFeeDelegationCancelled {
     #[prost(message, optional, tag="1")]
-    pub delegator: ::core::option::Option<super::aelf::Address>,
+    pub delegator: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     #[prost(message, optional, tag="2")]
-    pub delegatee: ::core::option::Option<super::aelf::Address>,
+    pub delegatee: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
     #[prost(message, optional, tag="3")]
-    pub caller: ::core::option::Option<super::aelf::Address>,
+    pub caller: ::core::option::Option<substreams_aelf_core::pb::aelf::Address>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

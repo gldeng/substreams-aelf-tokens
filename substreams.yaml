@@ -10,6 +10,7 @@ protobuf:
   files:
     - token/token_contract.proto
     - sf/substreams/aelf/token/v1/type.proto
+    - sf/substreams/aelf/token/v1/event.proto
   importPaths:
     - ./proto
   excludePaths:
@@ -27,6 +28,15 @@ binaries:
     file: ./target/wasm32-unknown-unknown/release/substreams.wasm
 
 modules:
+  - name: all_events
+    kind: map
+    doc: Extracts all events
+    initialBlock: 1
+    inputs:
+      - source: aelf.Block
+    output:
+      type: proto:sf.substreams.aelf.token.v1.Events
+
   - name: all_state_updates
     kind: map
     doc: Extracts state updates

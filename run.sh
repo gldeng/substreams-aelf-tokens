@@ -4,6 +4,10 @@
 
 substreams run -e localhost:10016 --plaintext \
 substreams-aelf-tokens-v0.1.0.spkg \
+  all_events -s 58 -t +10
+
+substreams run -e localhost:10016 --plaintext \
+substreams-aelf-tokens-v0.1.0.spkg \
   all_balance_changes -s 58 -t +10
 
 substreams run -e localhost:10016 --plaintext \

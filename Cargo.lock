@@ -558,6 +558,7 @@ dependencies = [
  "anyhow",
  "getrandom",
  "hex-literal",
+ "log",
  "num-bigint",
  "num-traits",
  "prost",
