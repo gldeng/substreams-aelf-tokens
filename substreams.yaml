@@ -1,0 +1,47 @@
+specVersion: v0.1.0
+package:
+  name: substreams_aelf_tokens
+  version: v0.1.0
+
+imports:
+  aelf: aelf-v1.0.0.spkg
+
+protobuf:
+  files:
+    - token/token_contract.proto
+    - sf/substreams/aelf/token/v1/type.proto
+  importPaths:
+    - ./proto
+  excludePaths:
+    - aelf
+    - sf/substreams/rpc
+    - sf/substreams/v1
+    - sf/substreams/sink
+    - sf/substreams/index
+    - sf/substreams/index/v1
+    - google
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ./target/wasm32-unknown-unknown/release/substreams.wasm
+
+modules:
+  - name: all_state_updates
+    kind: map
+    doc: Extracts state updates
+    initialBlock: 1
+    inputs:
+      - source: aelf.Block
+    output:
+      type: proto:sf.substreams.aelf.token.v1.StateUpdates
+  - name: all_balance_changes
+    kind: map
+    doc: Extracts Token balance changes
+    initialBlock: 1
+    inputs:
+      - map: all_state_updates
+    output:
+      type: proto:sf.substreams.aelf.token.v1.BalanceChanges
+
+network: aelf

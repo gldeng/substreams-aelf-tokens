@@ -1,0 +1,35 @@
+[package]
+name = "substreams_aelf_tokens"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "substreams"
+crate-type = ["cdylib"]
+
+[dependencies]
+anyhow = "1.0.93"
+hex-literal = "0.3.4"
+num-bigint = "0.4"
+num-traits = "0.2.15"
+prost = "0.13.3"
+prost-types = "0.13.3"
+substreams = "0.6.0"
+substreams-aelf = { git = "https://github.com/gldeng/substreams-aelf.git", package = "substreams-aelf", branch = "main" }
+substreams-aelf-core = { git = "https://github.com/gldeng/substreams-aelf.git", package = "substreams-aelf-core", branch = "main" }
+substreams-database-change = "2.0"
+substreams-entity-change = "2.0"
+varint = "0.9.0"
+
+# Required so that ethabi > ethereum-types build correctly under wasm32-unknown-unknown
+[target.wasm32-unknown-unknown.dependencies]
+getrandom = { version = "0.2", features = ["custom"] }
+
+[build-dependencies]
+anyhow = "1"
+regex = "1.8"
+
+[profile.release]
+lto = true
+opt-level = 's'
+strip = "debuginfo"

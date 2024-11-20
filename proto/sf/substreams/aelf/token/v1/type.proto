@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package sf.substreams.aelf.token.v1;
+
+message StateUpdate {
+    string tx_id = 1;
+    string key = 2;
+    bytes value = 3;
+}
+
+message StateUpdates {
+    repeated StateUpdate updates = 1;
+}
+
+message BalanceChanges {
+  repeated BalanceChange balance_changes = 1;
+}
+
+message BalanceChange {
+  string contract = 1;
+  string symbol = 2;
+  string owner = 3;
+  string old_balance = 4;
+  string new_balance = 5;
+
+  string transaction = 6;
+
+  string transfer_value = 7;
+}
