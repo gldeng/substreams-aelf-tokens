@@ -37,6 +37,19 @@ modules:
     output:
       type: proto:sf.substreams.aelf.token.v1.Events
 
+  - name: filtered_events
+    kind: map
+    inputs:
+      - params: string
+      - map: all_events
+    output:
+      type: proto:sf.substreams.aelf.token.v1.Events
+    doc: |
+      `filtered_events` reads from `all_events` and applies a filter on the events.
+      Supported operators are: logical or `||`, logical and `&&` and parenthesis: `()`
+      Use pattern `evt_addr:...` and `evt_name:...` to filter the events.
+      Example: `evt_addr:JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE && evt_name:Transferred`
+
   - name: all_state_updates
     kind: map
     doc: Extracts state updates
@@ -69,6 +82,7 @@ modules:
       type: proto:sf.substreams.aelf.token.v1.BalanceChanges
 
 params:
+  filtered_events: "evt_addr:JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE && evt_name:Transferred"
   filtered_state_updates: "st_0:JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE && st_1:Balances"
 
 network: aelf

@@ -27,3 +27,16 @@ message BalanceChange {
 
   string transfer_value = 7;
 }
+
+message Transfers {
+  repeated Transfer transfers = 1;
+}
+
+message Transfer {
+  string contract = 1;
+  string symbole = 2;
+  string from = 3;
+  string to = 4;
+  string amount = 5;
+}
+
