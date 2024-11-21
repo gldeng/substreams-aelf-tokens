@@ -1,10 +1,8 @@
 use substreams::errors::Error;
 use substreams::matches_keys_in_parsed_expr;
 use substreams::pb::substreams::Clock;
-use substreams_aelf_core::pb::aelf::LogEvent;
 use substreams_aelf_core::pb::sf::aelf::r#type::v1::{Block, TransactionTrace};
-use crate::event::evt_matches;
-use crate::pb::sf::substreams::aelf::token::v1::{Events, Transactions};
+use crate::pb::sf::substreams::aelf::token::v1::Transactions;
 
 #[substreams::handlers::map]
 fn all_transactions(blk: Block) -> Result<Transactions, Error> {

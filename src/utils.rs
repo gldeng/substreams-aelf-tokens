@@ -17,24 +17,24 @@ pub struct TransactionTractStateIterator<'a> {
     post_traces_iters: Vec<TransactionTractStateIterator<'a>>,
 }
 
-fn is_successful<'a>(trace: &'a TransactionTrace) -> bool {
+fn is_successful(trace: &TransactionTrace) -> bool {
     if trace.execution_status != substreams_aelf_core::pb::aelf::ExecutionStatus::Executed.into() { return false; }
     if trace.pre_traces.iter().any(|trace| !is_successful(trace)) { return false; }
     if trace.inline_traces.iter().any(|trace| !is_successful(trace)) { return false; }
     if trace.post_traces.iter().any(|trace| !is_successful(trace)) { return false; }
-    return true;
+    true
 }
 
 impl<'a> TransactionTractStateIterator<'a> {
     pub fn new(trace: &'a TransactionTrace) -> Self {
         let successful = is_successful(trace);
-        let pre_traces_iters = trace.pre_traces.iter().filter(|trace| is_successful(*trace)).map(|t| Self::new(t)).collect();
+        let pre_traces_iters = trace.pre_traces.iter().filter(|trace| is_successful(trace)).map(Self::new).collect();
         let inline_traces_iters = if successful {
-            trace.inline_traces.iter().map(|t| Self::new(t)).collect()
+            trace.inline_traces.iter().map(Self::new).collect()
         } else {
             vec![]
         };
-        let post_traces_iters = trace.post_traces.iter().filter(|trace| is_successful(*trace)).map(|t| Self::new(t)).collect();
+        let post_traces_iters = trace.post_traces.iter().filter(|trace| is_successful(trace)).map(Self::new).collect();
         Self {
             current_trace_group: TraceGroup::Pre,
             current_index: 0,

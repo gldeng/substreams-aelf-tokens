@@ -1,13 +1,8 @@
 use substreams::errors::Error;
 use substreams_aelf_core::pb::sf::aelf::r#type::v1::{Block, LogEvent};
 use substreams::pb::substreams::Clock;
-use log::log;
 use substreams::matches_keys_in_parsed_expr;
-use crate::pb::sf::substreams::aelf;
-use crate::pb::sf::substreams::aelf::token::v1::{Event, Events, StateUpdate, StateUpdates};
-use crate::utils::TransactionTractStateIterator;
-use substreams_aelf_core::pb_ext;
-use crate::state::state_matches;
+use crate::pb::sf::substreams::aelf::token::v1::{Event, Events};
 
 #[substreams::handlers::map]
 fn all_events(blk: Block) -> Result<Events, Error> {

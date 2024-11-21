@@ -1,22 +1,12 @@
 use substreams::errors::Error;
-use substreams_aelf_core::pb::sf::aelf::r#type::v1::{Block, LogEvent};
+use substreams_aelf_core::pb::sf::aelf::r#type::v1::Block;
 use substreams::matches_keys_in_parsed_expr;
 use crate::pb::sf::substreams::aelf;
 
-use std::io::Cursor;
-use std::ptr::hash;
-use crate::pb::token;
-use anyhow::{anyhow, Result};
+use anyhow::Result;
 
-use substreams_aelf_core::pb::aelf::{Address, TransactionExecutingStateSet, TransactionTrace};
-use substreams_aelf_core::pb_ext::*;
-use substreams_aelf::address;
 use crate::pb::sf::substreams::aelf::token::v1::{BalanceChange, BalanceChanges, StateUpdate, StateUpdates};
-use crate::pb::token::Transferred;
-use prost::Message;
-use prost::encoding::{decode_varint, varint};
-use std::borrow::BorrowMut;
-use crate::utils::TransactionTractStateIterator;
+use prost::encoding::decode_varint;
 
 #[substreams::handlers::map]
 fn all_state_updates(blk: Block) -> Result<StateUpdates, Error> {
@@ -104,7 +94,7 @@ mod tests {
 
     #[test]
     fn test_decode_varint64() {
-        let mut data = vec![0xf2u8, 0xc0u8, 0x01u8];
+        let data = vec![0xf2u8, 0xc0u8, 0x01u8];
         let val = decode_signed_varint64(&mut data.as_slice()).unwrap();
         assert_eq!(val, 12345);
     }

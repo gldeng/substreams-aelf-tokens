@@ -8,8 +8,8 @@ fn all_transfers(events: Events) -> Result<Transfers, Error> {
     let transfers: Vec<Transfer> = events.events.iter().flat_map(|evt| {
         evt.log.iter().map(|log| {
             let mut transferred: Transferred = Transferred::default();
-            let _ = transferred.merge(&*log.non_indexed.as_slice());
-            log.indexed.iter().for_each(|data| { let _ = transferred.merge(&*data.as_slice()); });
+            let _ = transferred.merge(log.non_indexed.as_slice());
+            log.indexed.iter().for_each(|data| { let _ = transferred.merge(data.as_slice()); });
             Transfer {
                 contract: log.address.clone(),
                 from: transferred.from.clone().map_or("".to_string(), |addr| addr.to_b58()),
