@@ -1,4 +1,5 @@
 use substreams::errors::Error;
+use substreams_aelf_core::pb::sf::aelf::r#type::v1::{Block, LogEvent};
 use substreams::matches_keys_in_parsed_expr;
 use crate::pb::sf::substreams::aelf;
 
@@ -7,8 +8,7 @@ use std::ptr::hash;
 use crate::pb::token;
 use anyhow::{anyhow, Result};
 
-use substreams_aelf_core::pb::aelf::{Address, LogEvent, TransactionExecutingStateSet, TransactionTrace};
-use substreams_aelf_core::pb::aelf::Block;
+use substreams_aelf_core::pb::aelf::{Address, TransactionExecutingStateSet, TransactionTrace};
 use substreams_aelf_core::pb_ext::*;
 use substreams_aelf::address;
 use crate::pb::sf::substreams::aelf::token::v1::{BalanceChange, BalanceChanges, StateUpdate, StateUpdates};
@@ -20,24 +20,19 @@ use crate::utils::TransactionTractStateIterator;
 
 #[substreams::handlers::map]
 fn all_state_updates(blk: Block) -> Result<StateUpdates, Error> {
-    let updates: Vec<StateUpdate> = blk.firehose_body.iter()
-        .flat_map(|body| {
-            body.transaction_traces.iter().flat_map(
-                |trace| TransactionTractStateIterator::new(trace).into_iter().flat_map(
-                    |tr| {
-                        let tx_id = tr.transaction_id.clone();
-                        tr.state_set.iter().flat_map(move |s| s.writes.iter().map({
-                            let tx_id = tx_id.clone().map(|x| {
-                                x.to_hex()
-                            }).unwrap_or_else(|| "0000000000000000000000000000000000000000000000000000000000000000".to_string());
-                            move |(k, v)| StateUpdate {
-                                tx_id: tx_id.clone(),
-                                key: k.to_string(),
-                                value: v.clone(),
-                            }
-                        }))
-                    }))
-        }).collect();
+    let updates: Vec<StateUpdate> = blk.transaction_traces.iter().flat_map(|tx| {
+        tx.calls.iter().filter(|call| !call.is_reverted).flat_map(|call| {
+            let tx_id = call.transaction_id.clone();
+            call.state_set.iter().flat_map(move |s| s.writes.iter().map({
+                let tx_id = tx_id.clone();
+                move |(k, v)| StateUpdate {
+                    tx_id: tx_id.clone(),
+                    key: k.to_string(),
+                    value: v.clone(),
+                }
+            }))
+        })
+    }).collect();
     Ok(StateUpdates {
         updates
     })

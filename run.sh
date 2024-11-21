@@ -12,16 +12,16 @@ substreams-aelf-tokens-v0.1.0.spkg \
 
 substreams run -e localhost:10016 --plaintext \
 substreams-aelf-tokens-v0.1.0.spkg \
-  filtered_events -s 58 -t +10
+  filtered_events -s 139 -t +1
 
 substreams run -e localhost:10016 --plaintext \
   substreams-aelf-tokens-v0.1.0.spkg \
-    all_transfers -s 58 -t +10
+    all_transfers -s 139 -t +1
 
 substreams run -e localhost:10016 --plaintext \
 substreams-aelf-tokens-v0.1.0.spkg \
-  all_balance_changes -s 58 -t +10
+  all_balance_changes -s 139 -t +1
 
 substreams run -e localhost:10016 --plaintext \
 substreams-aelf-tokens-v0.1.0.spkg \
-  filtered_state_updates -s 58 -t +10
+  filtered_state_updates -s 139 -t +1
