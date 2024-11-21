@@ -497,7 +497,7 @@ dependencies = [
 [[package]]
 name = "substreams-aelf"
 version = "0.1.0"
-source = "git+https://github.com/gldeng/substreams-aelf.git?branch=main#21980aca5f934741f199201d3518a0f39439da93"
+source = "git+https://github.com/gldeng/substreams-aelf.git?branch=main#4570982da188a3c33c9a9c58d105a10c2ac1b3a5"
 dependencies = [
  "substreams",
  "substreams-aelf-core",
@@ -506,7 +506,7 @@ dependencies = [
 [[package]]
 name = "substreams-aelf-core"
 version = "0.1.0"
-source = "git+https://github.com/gldeng/substreams-aelf.git?branch=main#21980aca5f934741f199201d3518a0f39439da93"
+source = "git+https://github.com/gldeng/substreams-aelf.git?branch=main#4570982da188a3c33c9a9c58d105a10c2ac1b3a5"
 dependencies = [
  "bs58",
  "hex",

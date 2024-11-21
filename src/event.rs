@@ -1,37 +1,36 @@
 use substreams::errors::Error;
-use substreams_aelf_core::pb::aelf::{Block, LogEvent};
+use substreams_aelf_core::pb::sf::aelf::r#type::v1::{Block, LogEvent};
+use substreams::pb::substreams::Clock;
 use log::log;
 use substreams::matches_keys_in_parsed_expr;
 use crate::pb::sf::substreams::aelf;
 use crate::pb::sf::substreams::aelf::token::v1::{Event, Events, StateUpdate, StateUpdates};
-use crate::pb::sf::substreams::v1::Clock;
 use crate::utils::TransactionTractStateIterator;
 use substreams_aelf_core::pb_ext;
 use crate::state::state_matches;
 
 #[substreams::handlers::map]
 fn all_events(blk: Block) -> Result<Events, Error> {
-    let events: Vec<Event> = blk.firehose_body.iter()
-        .flat_map(|body| {
-            body.transaction_traces.iter().flat_map(
-                |trace| TransactionTractStateIterator::new(trace).into_iter().flat_map(
-                    |tr| {
-                        let tx_id = tr.transaction_id.clone();
-                        tr.logs.iter().map(
-                            {
-                                let tx_id = tx_id.clone().map(|x| {
-                                    x.to_hex()
-                                }).unwrap_or_else(|| "0000000000000000000000000000000000000000000000000000000000000000".to_string());
-                                move |log| Event {
-                                    log: Some(log.clone()),
-                                    tx_id: tx_id.clone(),
-                                }
-                            })
-                    }))
-        }).collect();
+    let events: Vec<Event> = blk.transaction_traces.iter().flat_map(|trace| {
+        trace.calls.iter().filter(|call| !call.is_reverted).flat_map(|call| {
+            let tx_id = call.transaction_id.clone();
+            call.logs.iter().map(
+                {
+                    let tx_id = tx_id.clone();
+                    move |log| Event {
+                        log: Some(log.clone()),
+                        tx_id: tx_id.clone(),
+                    }
+                })
+        })
+    }).collect();
     Ok(Events {
         events,
-        clock: None, // TODO: Add clock
+        clock: Some(Clock {
+            id: blk.block_hash,
+            number: blk.height as u64,
+            timestamp: blk.header.unwrap().time,
+        }),
     })
 }
 
@@ -66,7 +65,7 @@ pub fn evt_keys(log: &LogEvent) -> Vec<String> {
     //     keys.push(k_log_sign);
     // }
 
-    let k_log_address = format!("evt_addr:{}", log.address.clone().map_or("".to_string(), |addr| addr.to_b58()));
+    let k_log_address = format!("evt_addr:{}", log.address);
     keys.push(k_log_address);
     let k_log_name = format!("evt_name:{}", log.name);
     keys.push(k_log_name);

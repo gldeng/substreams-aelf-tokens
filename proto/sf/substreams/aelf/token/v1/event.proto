@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package sf.substreams.aelf.token.v1;
 
-import 'aelf/core.proto';
 import 'sf/substreams/v1/clock.proto';
+import 'sf/aelf/type/v1/type.proto';
 
 message Events {
   sf.substreams.v1.Clock clock = 1;
@@ -12,6 +12,6 @@ message Events {
 }
 
 message Event {
-  .aelf.LogEvent log = 1;
+  .sf.aelf.type.v1.LogEvent log = 1;
   string tx_id = 2;
 }
