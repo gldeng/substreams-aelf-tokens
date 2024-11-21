@@ -4,6 +4,10 @@
 
 substreams run -e localhost:10016 --plaintext \
 substreams-aelf-tokens-v0.1.0.spkg \
+  filtered_transactions -s 683 -t +10
+
+substreams run -e localhost:10016 --plaintext \
+substreams-aelf-tokens-v0.1.0.spkg \
   all_events -s 58 -t +10
 
 substreams run -e localhost:10016 --plaintext \

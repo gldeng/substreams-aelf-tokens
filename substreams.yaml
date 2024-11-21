@@ -11,6 +11,7 @@ protobuf:
     - token/token_contract.proto
     - sf/substreams/aelf/token/v1/type.proto
     - sf/substreams/aelf/token/v1/event.proto
+    - sf/substreams/aelf/token/v1/transaction.proto
   importPaths:
     - ./proto
   excludePaths:
@@ -28,6 +29,29 @@ binaries:
     file: ./target/wasm32-unknown-unknown/release/substreams.wasm
 
 modules:
+  - name: all_transactions
+    kind: map
+    doc: Extracts all transactions
+    initialBlock: 1
+    inputs:
+      - source: sf.aelf.type.v1.Block
+    output:
+      type: proto:sf.substreams.aelf.token.v1.Transactions
+
+  - name: filtered_transactions
+    kind: map
+    inputs:
+      - params: string
+      - map: all_transactions
+    output:
+      type: proto:sf.substreams.aelf.token.v1.Transactions
+    doc: |
+      `filtered_transactions` reads from `all_transactions` and applies a filter on the transactions.
+      Supported operators are: logical or `||`, logical and `&&` and parenthesis: `()`
+      Use the following supported patterns `call_from:...`, `call_to:...`, `call_method:...`,
+      `main_call_from:...`, `main_call_to:...` and `main_call_method:...`.
+      Example: `call_to:JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE && call_method:Transfer`
+
   - name: all_events
     kind: map
     doc: Extracts all events
@@ -91,6 +115,7 @@ modules:
       type: proto:sf.substreams.aelf.token.v1.Transfers
 
 params:
+  filtered_transactions: "call_to:JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE && call_method:Transfer"
   filtered_events: "evt_addr:JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE && evt_name:Transferred"
   filtered_state_updates: "st_0:JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE && st_1:Balances"
 
