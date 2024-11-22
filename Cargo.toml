@@ -15,6 +15,7 @@ num-traits = "0.2.15"
 prost = "0.13.3"
 prost-types = "0.13.3"
 substreams = "0.6.0"
+aelf-types = { git = "https://github.com/gldeng/substreams-aelf.git", package = "aelf-types", branch = "main" }
 substreams-aelf = { git = "https://github.com/gldeng/substreams-aelf.git", package = "substreams-aelf", branch = "main" }
 substreams-aelf-core = { git = "https://github.com/gldeng/substreams-aelf.git", package = "substreams-aelf-core", branch = "main" }
 substreams-database-change = "2.0"

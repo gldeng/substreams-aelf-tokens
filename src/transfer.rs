@@ -1,6 +1,7 @@
 use substreams::errors::Error;
-use crate::pb::sf::substreams::aelf::token::v1::{Events, Transfer, Transfers};
 use prost::Message;
+use crate::pb::sf::substreams::aelf::token::v1::{Transfer, Transfers};
+use crate::pb::sf::substreams::aelf::v1::Events;
 use crate::pb::token::Transferred;
 
 #[substreams::handlers::map]
