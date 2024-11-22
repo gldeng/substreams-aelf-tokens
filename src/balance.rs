@@ -1,5 +1,4 @@
 use substreams::errors::Error;
-// use substreams_aelf_core::pb::sf::aelf::r#type::v1::Block;
 use substreams::matches_keys_in_parsed_expr;
 use crate::pb::sf::substreams::aelf;
 use crate::pb::sf::substreams::aelf::v1::StateUpdates;
@@ -7,7 +6,6 @@ use crate::pb::sf::substreams::aelf::token::v1::{BalanceUpdate, BalanceUpdates};
 
 use anyhow::Result;
 
-// use crate::pb::sf::substreams::aelf::token::v1::{BalanceChange, BalanceChanges, StateUpdate, StateUpdates};
 use prost::encoding::decode_varint;
 
 #[substreams::handlers::map]
@@ -35,7 +33,8 @@ fn all_balance_updates(state_updates: StateUpdates) -> Result<BalanceUpdates, Er
             }
         ).collect();
     Ok(BalanceUpdates {
-        balance_updates
+        balance_updates,
+        clock: state_updates.clock
     })
 }
 

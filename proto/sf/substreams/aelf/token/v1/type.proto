@@ -2,8 +2,11 @@ syntax = "proto3";
 
 package sf.substreams.aelf.token.v1;
 
+import 'sf/substreams/v1/clock.proto';
+
 message BalanceUpdates {
-  repeated BalanceUpdate balance_updates = 1;
+  .sf.substreams.v1.Clock clock = 1;
+  repeated BalanceUpdate balance_updates = 2;
 }
 
 message BalanceUpdate {
@@ -15,7 +18,8 @@ message BalanceUpdate {
 }
 
 message Transfers {
-  repeated Transfer transfers = 1;
+  .sf.substreams.v1.Clock clock = 1;
+  repeated Transfer transfers = 2;
 }
 
 message Transfer {

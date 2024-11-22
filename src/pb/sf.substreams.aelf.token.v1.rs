@@ -3,7 +3,9 @@
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BalanceUpdates {
-    #[prost(message, repeated, tag="1")]
+    #[prost(message, optional, tag="1")]
+    pub clock: ::core::option::Option<::substreams::pb::substreams::Clock>,
+    #[prost(message, repeated, tag="2")]
     pub balance_updates: ::prost::alloc::vec::Vec<BalanceUpdate>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -23,7 +25,9 @@ pub struct BalanceUpdate {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Transfers {
-    #[prost(message, repeated, tag="1")]
+    #[prost(message, optional, tag="1")]
+    pub clock: ::core::option::Option<::substreams::pb::substreams::Clock>,
+    #[prost(message, repeated, tag="2")]
     pub transfers: ::prost::alloc::vec::Vec<Transfer>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]

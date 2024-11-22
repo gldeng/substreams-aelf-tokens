@@ -22,6 +22,7 @@ fn all_transfers(events: Events) -> Result<Transfers, Error> {
         })
     }).collect();
     Ok(Transfers {
-        transfers
+        transfers,
+        clock: events.clock,
     })
 }
