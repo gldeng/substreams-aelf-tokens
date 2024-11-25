@@ -1,8 +1,6 @@
-use substreams::errors::Error;
-use substreams::matches_keys_in_parsed_expr;
-use crate::pb::sf::substreams::aelf;
-use crate::pb::sf::substreams::aelf::v1::StateUpdates;
 use crate::pb::sf::substreams::aelf::token::v1::{BalanceUpdate, BalanceUpdates};
+use crate::pb::sf::substreams::aelf::v1::StateUpdates;
+use substreams::errors::Error;
 
 use anyhow::Result;
 
@@ -10,34 +8,30 @@ use prost::encoding::decode_varint;
 
 #[substreams::handlers::map]
 fn all_balance_updates(state_updates: StateUpdates) -> Result<BalanceUpdates, Error> {
-    let balance_updates: Vec<BalanceUpdate> = state_updates.updates.iter()
-        .filter_map(
-            |u| {
-                let splits: Vec<String> = u.key.clone().split("/").map(|s| s.to_string()).collect();
-                match splits.as_slice() {
-                    [contract, _, owner, symbol] => {
-                        decode_signed_varint64(&mut u.value.as_slice()).map(
-                            |bal| BalanceUpdate {
-                                contract: "JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE".to_string(),
-                                symbol: symbol.to_string(),
-                                owner: owner.trim_matches('"').to_string(),
-                                new_balance: bal.to_string(),
-                                transaction: u.tx_id.clone(),
-                            }
-                        ).ok()
-                    }
-                    _ => {
-                        None
-                    }
-                }
+    let balance_updates: Vec<BalanceUpdate> = state_updates
+        .updates
+        .iter()
+        .filter_map(|u| {
+            let splits: Vec<String> = u.key.clone().split("/").map(|s| s.to_string()).collect();
+            match splits.as_slice() {
+                [contract, _, owner, symbol] => decode_signed_varint64(&mut u.value.as_slice())
+                    .map(|bal| BalanceUpdate {
+                        contract: contract.to_string(),
+                        symbol: symbol.to_string(),
+                        owner: owner.trim_matches('"').to_string(),
+                        new_balance: bal.to_string(),
+                        transaction: u.tx_id.clone(),
+                    })
+                    .ok(),
+                _ => None,
             }
-        ).collect();
+        })
+        .collect();
     Ok(BalanceUpdates {
         balance_updates,
-        clock: state_updates.clock
+        clock: state_updates.clock,
     })
 }
-
 
 fn decode_signed_varint64(bytes: &mut impl prost::bytes::Buf) -> Result<i64> {
     // First, decode it as an unsigned varint.
