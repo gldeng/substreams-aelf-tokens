@@ -22,7 +22,6 @@ pub fn db_out(clock: Clock, balance_updates: BalanceUpdates) -> Result<DatabaseC
             .set("transaction", balance_update.transaction)
             .set("block_num", &block_num)
             .set("timestamp", &timestamp);
-        break
     }
 
     Ok(tables.to_database_changes())
