@@ -21,6 +21,8 @@ pub struct BalanceUpdate {
     pub new_balance: ::prost::alloc::string::String,
     #[prost(string, tag="5")]
     pub transaction: ::prost::alloc::string::String,
+    #[prost(string, tag="6")]
+    pub call_path: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

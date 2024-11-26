@@ -1,10 +1,12 @@
-CREATE TABLE IF NOT EXISTS balances (
+CREATE TABLE IF NOT EXISTS balance_updates (
    "contract" TEXT NOT NULL,
    "symbol" TEXT NOT NULL,
    "owner" TEXT NOT NULL,
-   "balance" NUMERIC NOT NULL,
+   "balance" BIGINT NOT NULL,
    "transaction" TEXT NOT NULL,
+   "call_path" TEXT NOT NULL,
    "block_num" INT NOT NULL,
    "timestamp" TEXT NOT NULL,
-   PRIMARY KEY ("contract", "symbol", "owner")
+   "ordinal" INT NOT NULL,
+   PRIMARY KEY ("contract", "symbol", "owner", "block_num", "ordinal")
 );

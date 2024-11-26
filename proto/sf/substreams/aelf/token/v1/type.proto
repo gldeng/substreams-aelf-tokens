@@ -15,6 +15,7 @@ message BalanceUpdate {
   string owner = 3;
   string new_balance = 4;
   string transaction = 5;
+  string call_path = 6;
 }
 
 message Transfers {

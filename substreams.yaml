@@ -6,7 +6,7 @@ package:
 imports:
   sql: https://github.com/streamingfast/substreams-sink-sql/releases/download/protodefs-v1.0.3/substreams-sink-sql-protodefs-v1.0.3.spkg
   aelf: https://github.com/gldeng/firehose-aelf/releases/download/v1.0.0-preview.1/aelf-v1.0.0-preview.1.spkg
-  aelf_common: https://github.com/gldeng/substreams-foundational-modules/releases/download/v0.1.0-preview.2/aelf-common-v0.1.0-preview.2.spkg
+  aelf_common: https://github.com/gldeng/substreams-foundational-modules/releases/download/v0.1.0-preview.3/aelf-common-v0.1.0-preview.3.spkg
 
 protobuf:
   files:

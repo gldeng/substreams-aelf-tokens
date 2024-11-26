@@ -21,6 +21,7 @@ fn all_balance_updates(state_updates: StateUpdates) -> Result<BalanceUpdates, Er
                         owner: owner.trim_matches('"').to_string(),
                         new_balance: bal.to_string(),
                         transaction: u.tx_id.clone(),
+                        call_path: u.call_path.to_string(),
                     })
                     .ok(),
                 _ => None,
