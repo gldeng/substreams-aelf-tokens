@@ -30,5 +30,7 @@ message Transfer {
   string to = 4;
   string amount = 5;
   string memo = 6;
+  string tx_id = 7;
+  string call_path = 8;
 }
 

@@ -47,5 +47,9 @@ pub struct Transfer {
     pub amount: ::prost::alloc::string::String,
     #[prost(string, tag="6")]
     pub memo: ::prost::alloc::string::String,
+    #[prost(string, tag="7")]
+    pub tx_id: ::prost::alloc::string::String,
+    #[prost(string, tag="8")]
+    pub call_path: ::prost::alloc::string::String,
 }
 // @@protoc_insertion_point(module)

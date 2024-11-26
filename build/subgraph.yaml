@@ -1,0 +1,16 @@
+specVersion: 0.0.4
+description: AElf Token Subgraph (powered by Substreams)
+repository: https://github.com/graphprotocol/graph-tooling
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: substreams
+    name: substream_test
+    network: aelf
+    source:
+      package:
+        moduleName: graph_out
+        file: substream_test/substreams-aelf-tokens-v0.1.0.spkg
+    mapping:
+      kind: substreams/graph-entities
+      apiVersion: 0.0.5

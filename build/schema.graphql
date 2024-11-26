@@ -1,0 +1,36 @@
+type Transfer @entity {
+  id: ID!
+
+  "The timestamp when the contract was deployed"
+  timestamp: String
+
+  "The block number of the contract deployment"
+  blockNumber: BigInt!
+
+  "The address of the token contract"
+  contract: String!
+
+  "The address of the sender"
+  from: String!
+
+  "The address of the receiver"
+  to: String!
+
+  "The token symbol"
+  symbol: String!
+
+  "The amount being transferred"
+  amount: BigInt!
+
+  "The memo of the transfer"
+  memo: String!
+
+  "The transaction that triggered this change"
+  transaction: String
+
+  "The path of the call in the transaction"
+  callPath: String
+
+  "The ordinal of the state updates"
+  ordinal: BigInt!
+}

@@ -18,6 +18,8 @@ fn all_transfers(events: Events) -> Result<Transfers, Error> {
                 symbol: transferred.symbol,
                 amount: transferred.amount.to_string(),
                 memo: transferred.memo,
+                tx_id: evt.tx_id.clone(),
+                call_path: evt.call_path.clone()
             }
         })
     }).collect();
