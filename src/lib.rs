@@ -1,4 +1,5 @@
 mod pb;
 mod balance;
 mod transfer;
-mod sinks;
+mod db_sink;
+mod graph_sink;

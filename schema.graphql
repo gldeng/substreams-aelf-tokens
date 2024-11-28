@@ -1,11 +1,14 @@
 type Transfer @entity {
   id: ID!
 
-  "The timestamp when the contract was deployed"
+  "The timestamp of the transfer event"
   timestamp: String
 
-  "The block number of the contract deployment"
+  "The block number of the transfer event"
   blockNumber: BigInt!
+
+  "The block hash of the transfer event"
+  blockHash: String!
 
   "The address of the token contract"
   contract: String!
@@ -34,3 +37,71 @@ type Transfer @entity {
   "The ordinal of the state updates"
   ordinal: BigInt!
 }
+
+type Balance @entity {
+  id: ID!
+
+  "The timestamp of the last balance update"
+  timestamp: String
+
+  "The block number of the last balance update"
+  blockNumber: BigInt!
+
+  "The block hash of the last balance update"
+  blockHash: String!
+
+  "The address of the token contract"
+  contract: String!
+
+  "The address of the owner"
+  owner: String!
+
+  "The token symbol"
+  symbol: String!
+
+  "The balance owned by the owner"
+  balance: BigInt!
+
+  "The transaction that triggered this change"
+  transaction: String
+
+  "The path of the call in the transaction"
+  callPath: String
+}
+
+
+
+type BalanceUpdate @entity {
+  id: ID!
+
+  "The timestamp of the last balance update"
+  timestamp: String
+
+  "The block number of the last balance update"
+  blockNumber: BigInt!
+
+  "The block hash of the last balance update"
+  blockHash: String!
+
+  "The address of the token contract"
+  contract: String!
+
+  "The address of the owner"
+  owner: String!
+
+  "The token symbol"
+  symbol: String!
+
+  "The balance owned by the owner"
+  balance: BigInt!
+
+  "The transaction that triggered this change"
+  transaction: String
+
+  "The path of the call in the transaction"
+  callPath: String
+
+  "The ordinal of the balace update"
+  ordinal: BigInt!
+}
+
