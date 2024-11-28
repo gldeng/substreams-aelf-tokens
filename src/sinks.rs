@@ -15,7 +15,7 @@ pub fn db_out(
 ) -> Result<DatabaseChanges, Error> {
     let mut tables = substreams_database_change::tables::Tables::new();
     let block_num = clock.clone().number.to_string();
-    let timestamp = clock.clone().timestamp.unwrap().seconds.to_string();
+    let timestamp = clock.clone().timestamp.unwrap().to_string();
 
     let mut ordinal = 0;
     for balance_update in balance_updates.balance_updates {
