@@ -44,6 +44,13 @@ modules:
     output:
       type: proto:sf.substreams.aelf.token.v1.BalanceUpdates
 
+  - name: store_balances
+    kind: store
+    updatePolicy: set
+    valueType: bigint
+    inputs:
+      - map: all_balance_updates
+
   - name: all_transfers
     kind: map
     doc: Extracts token transfers
@@ -58,6 +65,7 @@ modules:
     inputs:
       - source: sf.substreams.v1.Clock
       - map: all_balance_updates
+      - store: store_balances
     output:
       type: proto:sf.substreams.sink.database.v1.DatabaseChanges
 

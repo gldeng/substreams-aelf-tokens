@@ -15,4 +15,4 @@ substreams-aelf-tokens-v0.1.0.spkg \
   all_balance_updates -s 15 -t +1
 
 
-substreams run -e localhost:10016 --plaintext substreams.yaml db_out -s 14 -t +1
+substreams run -e localhost:10016 --plaintext substreams.yaml db_out -s 1 -t +10

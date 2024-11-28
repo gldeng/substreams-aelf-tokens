@@ -5,6 +5,9 @@ use substreams::errors::Error;
 use anyhow::Result;
 
 use prost::encoding::decode_varint;
+use substreams::store::{StoreNew, StoreSet, StoreSetBigInt};
+use std::str::FromStr;
+use substreams::prelude::BigInt;
 
 #[substreams::handlers::map]
 fn all_balance_updates(state_updates: StateUpdates) -> Result<BalanceUpdates, Error> {
@@ -32,6 +35,20 @@ fn all_balance_updates(state_updates: StateUpdates) -> Result<BalanceUpdates, Er
         balance_updates,
         clock: state_updates.clock,
     })
+}
+
+#[substreams::handlers::store]
+fn store_balances(balance_updates: BalanceUpdates, store: StoreSetBigInt) {
+    let mut ordinal = 0;
+    for balance_update in balance_updates.balance_updates {
+        let key = get_balance_key(&balance_update);
+        store.set(ordinal, key, &BigInt::from_str(&balance_update.new_balance).unwrap_or_default());
+        ordinal += 1;
+    }
+}
+
+pub(crate) fn get_balance_key(balance_update: &BalanceUpdate) -> String {
+    format!("{}:{}:{}", balance_update.contract, balance_update.symbol, balance_update.owner)
 }
 
 fn decode_signed_varint64(bytes: &mut impl prost::bytes::Buf) -> Result<i64> {

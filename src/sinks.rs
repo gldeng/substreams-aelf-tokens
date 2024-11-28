@@ -5,15 +5,46 @@ use substreams_database_change::pb::database::DatabaseChanges;
 use substreams_entity_change::pb::entity::EntityChanges;
 use crate::pb::sf::substreams::aelf::token::v1::{BalanceUpdates, Transfers};
 use std::str::FromStr;
+use substreams::store::{StoreGet, StoreGetBigInt};
 
 #[substreams::handlers::map]
-pub fn db_out(clock: Clock, balance_updates: BalanceUpdates) -> Result<DatabaseChanges, Error> {
+pub fn db_out(
+    clock: Clock,
+    balance_updates: BalanceUpdates,
+    balances_store: StoreGetBigInt,
+) -> Result<DatabaseChanges, Error> {
     let mut tables = substreams_database_change::tables::Tables::new();
     let block_num = clock.clone().number.to_string();
     let timestamp = clock.clone().timestamp.unwrap().seconds.to_string();
 
     let mut ordinal = 0;
     for balance_update in balance_updates.balance_updates {
+        let key = crate::balance::get_balance_key(&balance_update);
+        let table_key = [
+            ("contract", (&balance_update).contract.to_string()),
+            ("symbol", (&balance_update).symbol.to_string()),
+            ("owner", (&balance_update).owner.to_string()),
+        ];
+        let balance_row = match balances_store.get_at(ordinal - 1, key) {
+            Some(_) => {
+                tables.update_row("balances", table_key)
+            }
+            _ => {
+                tables.create_row("balances", table_key)
+            }
+        };
+
+        balance_row
+            .set("contract", balance_update.contract.clone())
+            .set("symbol", balance_update.symbol.clone())
+            .set("owner", balance_update.owner.clone())
+            .set("balance", balance_update.new_balance.clone())
+            .set("transaction", balance_update.transaction.clone())
+            .set("call_path", balance_update.call_path.clone())
+            .set("block_num", &block_num)
+            .set("timestamp", &timestamp);
+
+
         tables.create_row("balance_updates", [
             ("contract", (&balance_update).contract.to_string()),
             ("symbol", (&balance_update).symbol.to_string()),
