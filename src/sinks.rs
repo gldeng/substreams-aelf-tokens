@@ -3,19 +3,14 @@ use substreams::pb::substreams::Clock;
 use substreams::scalar::BigInt;
 use substreams_database_change::pb::database::DatabaseChanges;
 use substreams_entity_change::pb::entity::EntityChanges;
-use crate::pb::sf::substreams::aelf::token::v1::{BalanceUpdates, Transfers};
+use crate::pb::sf::substreams::aelf::token::v1::{BalanceUpdate, BalanceUpdates, Transfers};
 use std::str::FromStr;
 use substreams::store::{StoreGet, StoreGetBigInt};
+use substreams_database_change::tables::Tables;
 
-#[substreams::handlers::map]
-pub fn db_out(
-    clock: Clock,
-    balance_updates: BalanceUpdates,
-    balances_store: StoreGetBigInt,
-) -> Result<DatabaseChanges, Error> {
-    let mut tables = substreams_database_change::tables::Tables::new();
-    let block_num = clock.clone().number.to_string();
-    let timestamp = clock.clone().timestamp.unwrap().to_string();
+fn db_write_balance(tables: &mut Tables, clock: &Clock, balance_updates: BalanceUpdates, balances_store: &StoreGetBigInt) {
+    let Clock { id: block_hash, number: block_num, timestamp } = clock.clone();
+    let timestamp = timestamp.unwrap_or_default();
 
     let mut ordinal = 0;
     for balance_update in balance_updates.balance_updates {
@@ -41,15 +36,13 @@ pub fn db_out(
             .set("balance", balance_update.new_balance.clone())
             .set("transaction", balance_update.transaction.clone())
             .set("call_path", balance_update.call_path.clone())
-            .set("block_num", &block_num)
+            .set("block_num", block_num)
+            .set("block_hash", block_hash.clone())
             .set("timestamp", &timestamp);
 
 
         tables.create_row("balance_updates", [
-            ("contract", (&balance_update).contract.to_string()),
-            ("symbol", (&balance_update).symbol.to_string()),
-            ("owner", (&balance_update).owner.to_string()),
-            ("block_num", block_num.to_string()),
+            ("block_hash", block_num.to_string()),
             ("ordinal", ordinal.to_string()),
         ])
             .set("contract", balance_update.contract)
@@ -58,11 +51,22 @@ pub fn db_out(
             .set("balance", balance_update.new_balance)
             .set("transaction", balance_update.transaction)
             .set("call_path", balance_update.call_path)
-            .set("block_num", &block_num)
+            .set("block_num", block_num)
+            .set("block_hash", block_hash.to_string())
             .set("ordinal", ordinal.to_string())
             .set("timestamp", &timestamp);
         ordinal += 1;
     }
+}
+
+#[substreams::handlers::map]
+pub fn db_out(
+    clock: Clock,
+    balance_updates: BalanceUpdates,
+    balances_store: StoreGetBigInt,
+) -> Result<DatabaseChanges, Error> {
+    let mut tables = substreams_database_change::tables::Tables::new();
+    db_write_balance(&mut tables, &clock, balance_updates, &balances_store);
 
     Ok(tables.to_database_changes())
 }

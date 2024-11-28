@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS balances (
    "balance" BIGINT NOT NULL,
    "transaction" TEXT NOT NULL,
    "call_path" TEXT NOT NULL,
+   "block_hash" TEXT NOT NULL,
    "block_num" INT NOT NULL,
    "timestamp" TEXT NOT NULL,
    PRIMARY KEY ("contract", "symbol", "owner")
@@ -17,8 +18,9 @@ CREATE TABLE IF NOT EXISTS balance_updates (
    "balance" BIGINT NOT NULL,
    "transaction" TEXT NOT NULL,
    "call_path" TEXT NOT NULL,
+   "block_hash" TEXT NOT NULL,
    "block_num" INT NOT NULL,
    "timestamp" TEXT NOT NULL,
    "ordinal" INT NOT NULL,
-   PRIMARY KEY ("contract", "symbol", "owner", "block_num", "ordinal")
+   PRIMARY KEY ("block_hash", "ordinal")
 );
