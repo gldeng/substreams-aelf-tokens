@@ -11,11 +11,11 @@ message BalanceUpdates {
 
 message BalanceUpdate {
   string contract = 1;
-  string symbol = 2;
-  string owner = 3;
-  string new_balance = 4;
-  string transaction = 5;
-  string call_path = 6;
+  string transaction = 2;
+  string call_path = 3;
+  string symbol = 4;
+  string owner = 5;
+  string new_balance = 6;
 }
 
 message Transfers {
@@ -25,13 +25,13 @@ message Transfers {
 
 message Transfer {
   string contract = 1;
-  string symbol = 2;
-  string from = 3;
-  string to = 4;
-  string amount = 5;
-  string memo = 6;
-  string tx_id = 7;
-  string call_path = 8;
+  string tx_id = 2;
+  string call_path = 3;
+  string symbol = 4;
+  string from = 5;
+  string to = 6;
+  string amount = 7;
+  string memo = 8;
 }
 
 message Burns {
@@ -41,9 +41,29 @@ message Burns {
 
 message Burn {
   string contract = 1;
-  string burner = 2;
-  string symbol = 3;
-  string amount = 4;
-  string tx_id = 5;
-  string call_path = 6;
+  string tx_id = 2;
+  string call_path = 3;
+  string burner = 4;
+  string symbol = 5;
+  string amount = 6;
+}
+
+message TokenCreations {
+  .sf.substreams.v1.Clock clock = 1;
+  repeated TokenCreation token_creations = 2;
+}
+
+message TokenCreation {
+  string contract = 1;
+  string tx_id = 2;
+  string call_path = 3;
+  string owner = 4;
+  string symbol = 5;
+  string token_name = 6;
+  string total_supply = 7;
+  string decimals = 8;
+  string issuer = 9;
+  bool is_burnable = 10;
+  int32 issue_chain_id = 11;
+  map<string, string> external_info = 12;
 }

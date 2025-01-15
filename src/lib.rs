@@ -4,3 +4,4 @@ mod transfer;
 mod db_sink;
 mod graph_sink;
 mod burn;
+mod token_creation;

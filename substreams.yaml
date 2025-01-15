@@ -29,8 +29,6 @@ binaries:
     file: ./target/wasm32-unknown-unknown/release/substreams.wasm
 
 modules:
-  - name: events_of_transfer
-    use: aelf_common:filtered_events
 
   - name: state_updates_of_balance
     use: aelf_common:filtered_state_updates
@@ -50,6 +48,9 @@ modules:
     inputs:
       - map: all_balance_updates
 
+  - name: events_of_transfer
+    use: aelf_common:filtered_events
+
   - name: all_transfers
     kind: map
     doc: Extracts token transfers
@@ -68,6 +69,17 @@ modules:
       - map: events_of_burn
     output:
       type: proto:sf.substreams.aelf.token.v1.Burns
+
+  - name: events_of_token_creation
+    use: aelf_common:filtered_events
+
+  - name: all_token_creations
+    kind: map
+    doc: Extracts token creations
+    inputs:
+      - map: events_of_token_creation
+    output:
+      type: proto:sf.substreams.aelf.token.v1.TokenCreations
 
   - name: db_out
     kind: map
@@ -90,6 +102,7 @@ modules:
       type: proto:substreams.entity.v1.EntityChanges # this type can be consumed by Graph Node
 
 params:
+  events_of_token_creation: "evt_addr:JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE && evt_name:TokenCreated"
   events_of_transfer: "evt_addr:JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE && evt_name:Transferred"
   events_of_burn: "evt_addr:JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE && evt_name:Burned"
   state_updates_of_balance: "st_0:JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE && st_1:Balances"
