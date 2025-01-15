@@ -52,4 +52,28 @@ pub struct Transfer {
     #[prost(string, tag="8")]
     pub call_path: ::prost::alloc::string::String,
 }
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Burns {
+    #[prost(message, optional, tag="1")]
+    pub clock: ::core::option::Option<::substreams::pb::substreams::Clock>,
+    #[prost(message, repeated, tag="2")]
+    pub burns: ::prost::alloc::vec::Vec<Burn>,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Burn {
+    #[prost(string, tag="1")]
+    pub contract: ::prost::alloc::string::String,
+    #[prost(string, tag="2")]
+    pub burner: ::prost::alloc::string::String,
+    #[prost(string, tag="3")]
+    pub symbol: ::prost::alloc::string::String,
+    #[prost(string, tag="4")]
+    pub amount: ::prost::alloc::string::String,
+    #[prost(string, tag="5")]
+    pub tx_id: ::prost::alloc::string::String,
+    #[prost(string, tag="6")]
+    pub call_path: ::prost::alloc::string::String,
+}
 // @@protoc_insertion_point(module)

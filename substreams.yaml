@@ -6,7 +6,7 @@ package:
 imports:
   sql: https://github.com/streamingfast/substreams-sink-sql/releases/download/protodefs-v1.0.3/substreams-sink-sql-protodefs-v1.0.3.spkg
   aelf: https://github.com/gldeng/firehose-aelf/releases/download/v1.0.0-preview.1/aelf-v1.0.0-preview.1.spkg
-  aelf_common: https://github.com/gldeng/substreams-foundational-modules/releases/download/v0.1.0-preview.3/aelf-common-v0.1.0-preview.3.spkg
+  aelf_common: https://github.com/gldeng/substreams-foundational-modules/releases/download/v0.1.0-preview.4/aelf-common-v0.1.0-preview.4.spkg
 
 protobuf:
   files:
@@ -38,7 +38,6 @@ modules:
   - name: all_balance_updates
     kind: map
     doc: Extracts Token balance changes
-    initialBlock: 1
     inputs:
       - map: state_updates_of_balance
     output:
@@ -54,11 +53,21 @@ modules:
   - name: all_transfers
     kind: map
     doc: Extracts token transfers
-    initialBlock: 1
     inputs:
       - map: events_of_transfer
     output:
       type: proto:sf.substreams.aelf.token.v1.Transfers
+
+  - name: events_of_burn
+    use: aelf_common:filtered_events
+
+  - name: all_burns
+    kind: map
+    doc: Extracts token burns
+    inputs:
+      - map: events_of_burn
+    output:
+      type: proto:sf.substreams.aelf.token.v1.Burns
 
   - name: db_out
     kind: map
@@ -82,6 +91,7 @@ modules:
 
 params:
   events_of_transfer: "evt_addr:JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE && evt_name:Transferred"
+  events_of_burn: "evt_addr:JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE && evt_name:Burned"
   state_updates_of_balance: "st_0:JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE && st_1:Balances"
 
 network: aelf

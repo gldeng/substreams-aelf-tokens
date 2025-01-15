@@ -34,3 +34,16 @@ message Transfer {
   string call_path = 8;
 }
 
+message Burns {
+  .sf.substreams.v1.Clock clock = 1;
+  repeated Burn burns = 2;
+}
+
+message Burn {
+  string contract = 1;
+  string burner = 2;
+  string symbol = 3;
+  string amount = 4;
+  string tx_id = 5;
+  string call_path = 6;
+}
