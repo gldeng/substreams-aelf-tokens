@@ -22,9 +22,9 @@ fn db_write_balances(
     for balance_update in balance_updates.balance_updates {
         let key = crate::balance::get_balance_key(&balance_update);
         let table_key = [
-            ("contract", (&balance_update).contract.to_string()),
-            ("symbol", (&balance_update).symbol.to_string()),
-            ("owner", (&balance_update).owner.to_string()),
+            ("contract", balance_update.contract.to_string()),
+            ("symbol", balance_update.symbol.to_string()),
+            ("owner", balance_update.owner.to_string()),
         ];
         let balance_row = match balances_store.get_at(ordinal - 1, key) {
             Some(_) => tables.update_row("balances", table_key),
@@ -40,7 +40,7 @@ fn db_write_balances(
             .set("call_path", balance_update.call_path.clone())
             .set("block_num", block_num)
             .set("block_hash", block_hash.clone())
-            .set("timestamp", &timestamp);
+            .set("timestamp", timestamp);
 
         tables
             .create_row(
@@ -59,7 +59,7 @@ fn db_write_balances(
             .set("block_num", block_num)
             .set("block_hash", block_hash.to_string())
             .set("ordinal", ordinal.to_string())
-            .set("timestamp", &timestamp);
+            .set("timestamp", timestamp);
         ordinal += 1;
     }
 }
